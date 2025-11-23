@@ -1,0 +1,24 @@
+{{- if .Values.volumeConfig.library.persistence.enabled -}}
+---
+kind: "PersistentVolumeClaim"
+apiVersion: {{ .Values.apiVersions.persistentVolumeClaim | quote }}
+metadata:
+  name: {{ .Values.volumeConfig.library.persistence.pvcName | quote }}
+  namespace: {{ include "names.namespace" . | quote }}
+  labels:
+    {{- include "labels.commonLabels" . | nindent 4 }}
+  {{- with .Values.volumeConfig.library.persistence.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+  {{- range .Values.volumeConfig.library.persistence.accessModes }}
+    - {{ . | quote}}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.volumeConfig.library.persistence.size | quote }}
+  storageClassName: {{ .Values.volumeConfig.library.persistence.storageClass | quote }}
+...
+{{- end }}
