@@ -1,0 +1,29 @@
+---
+apiVersion: "argoproj.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "romm"
+  namespace: "argocd"
+spec:
+  project: "default"
+  sources:
+    - repoURL: "https://github.com/erNail/romm-chart"
+      targetRevision: "feature/add-chart"
+      path: "examples/argocd-cnpg"
+      ref: "values"
+    - repoURL: "https://github.com/erNail/romm-chart"
+      targetRevision: "feature/add-chart"
+      path: "chart"
+      helm:
+        releaseName: "romm"
+        valueFiles:
+          - "$values/examples/argocd-cnpg/values-romm.yaml"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: "romm"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - "CreateNamespace=true"

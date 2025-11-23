@@ -1,0 +1,24 @@
+{{- if .Values.volumeConfig.redisData.persistence.enabled -}}
+---
+kind: "PersistentVolumeClaim"
+apiVersion: {{ .Values.apiVersions.persistentVolumeClaim | quote }}
+metadata:
+  name: {{ .Values.volumeConfig.redisData.persistence.pvcName | quote }}
+  namespace: {{ include "names.namespace" . | quote }}
+  labels:
+    {{- include "labels.commonLabels" . | nindent 4 }}
+  {{- with .Values.volumeConfig.redisData.persistence.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+  {{- range .Values.volumeConfig.redisData.persistence.accessModes }}
+    - {{ . | quote}}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.volumeConfig.redisData.persistence.size | quote }}
+  storageClassName: {{ .Values.volumeConfig.redisData.persistence.storageClass | quote }}
+...
+{{- end }}

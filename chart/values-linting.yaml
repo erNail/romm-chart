@@ -1,0 +1,31 @@
+---
+replicaCount: 2
+
+autoscaling:
+  enabled: true
+
+volumeConfig:
+  assets:
+    persistence:
+      enabled: true
+  library:
+    persistence:
+      enabled: true
+  resources:
+    persistence:
+      enabled: true
+  redisData:
+    persistence:
+      enabled: true
+
+ingress:
+  enabled: true
+
+podDisruptionBudget:
+  enabled: true
+
+hostPodAntiAffinity:
+  enabled: true
+
+serviceAccount:
+  enabled: true

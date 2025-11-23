@@ -1,0 +1,81 @@
+---
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+volumeConfig:
+  resources:
+    persistence:
+      enabled: true
+      size: "1Gi"
+      storageClass: "longhorn"
+  redisData:
+    persistence:
+      enabled: true
+      size: "1Gi"
+      storageClass: "longhorn"
+  assets:
+    persistence:
+      enabled: true
+      size: "1Gi"
+      storageClass: "longhorn"
+  library:
+    persistence:
+      enabled: true
+      size: "100Gi"
+      storageClass: "nfs-subdir-delete"
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "dns01-cloudflare-cluster-issuer-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1000m"
+  hosts:
+    - host: "romm.nailforge.dev"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
+          servicePortName: "http"
+  tls:
+    - hosts:
+        - "romm.nailforge.dev"
+      secretName: "romm-tls"
+
+app:
+  env:
+    - name: "ROMM_PORT"
+      value: "8080"
+    - name: "ROMM_DB_DRIVER"
+      value: "postgresql"
+    - name: "DB_HOST"
+      value: "romm-postgresql-cluster-rw"
+    - name: "DB_PORT"
+      value: "5432"
+    - name: "DB_NAME"
+      value: "romm"
+    - name: "DB_USER"
+      valueFrom:
+        secretKeyRef:
+          name: "romm-db-credentials"
+          key: "username"
+    - name: "DB_PASSWD"
+      valueFrom:
+        secretKeyRef:
+          name: "romm-db-credentials"
+          key: "password"
+    # Generate this with `openssl rand -hex 32`
+    - name: "ROMM_AUTH_SECRET_KEY"
+      valueFrom:
+        secretKeyRef:
+          name: "romm-auth-secret-key"
+          key: "secretKey"
+    - name: "HASHEOUS_API_ENABLED"
+      value: "true"

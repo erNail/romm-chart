@@ -1,0 +1,23 @@
+---
+apiVersion: "v2"
+name: "romm"
+description: >-
+  A lightweight Helm chart for `romm` (a self-hosted rom manager and player)
+  that prioritizes transparency and flexibility.
+type: "application"
+icon: "https://romm.app/_ipx/q_80/images/blocks/logos/romm.svg"
+keywords:
+  - "romm"
+maintainers:
+  - name: "ernail"
+    email: "nagel.eric.95@googlemail.com"
+annotations:
+  artifacthub.io/license: "MIT"
+  artifacthub.io/links: |
+    - name: source
+      url: https://github.com/erNail/romm-chart
+    - name: support
+      url: https://github.com/erNail/romm-chart/issues
+version: "0.0.0"
+# renovate: image=rommapp/romm
+appVersion: "4.4.1"
