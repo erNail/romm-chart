@@ -267,9 +267,11 @@ volumeConfig:
           claimName: "redis-data"
   # -- Directory for the romm config file
   config:
+    # -- Will be added to the pods `volumeMounts`.
     volumeMount:
       name: "config"
       mountPath: "/romm/config"
+    # -- Will be added to the pods `volumes`.
     volume:
       name: "config"
       configMap:
@@ -277,17 +279,21 @@ volumeConfig:
         name: "config"
   # -- Required by romm for temporary files
   tmp:
+    # -- Will be added to the pods `volumeMounts`.
     volumeMount:
       name: "tmp"
       mountPath: "/tmp"
+    # -- Will be added to the pods `volumes`.
     volume:
       name: "tmp"
       emptyDir: {}
   # -- Required by romm for nginx configuration
   nginxConf:
+    # -- Will be added to the pods `volumeMounts`.
     volumeMount:
       name: "nginx-conf"
       mountPath: "/etc/nginx/conf.d"
+    # -- Will be added to the pods `volumes`.
     volume:
       name: "nginx-conf"
       emptyDir: {}
