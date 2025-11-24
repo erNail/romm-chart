@@ -6,7 +6,6 @@ apiVersions:
   deployment: "apps/v1"
   horizontalPodAutoscaler: "autoscaling/v2"
   ingress: "networking.k8s.io/v1"
-  networkPolicy: "networking.k8s.io/v1"
   persistentVolumeClaim: "v1"
   podDisruptionBudget: "policy/v1"
   service: "v1"
@@ -311,8 +310,6 @@ serviceAccount:
 # To use these ports in the service(s),
 # you need to add them to `.Values.service.ports` or `.Values.metrics.service.ports`.
 #
-# If `.Values.networkPolicy.enabled` is true and `.Values.ingress.enabled` is true,
-# you need to add them to `.Values.networkPolicy.ingressController.containerPorts`.
 #
 # If `.Values.livenessProbe.enabled` is true, you need to add them to `.Values.livenessProbe`.
 #
