@@ -77,7 +77,7 @@ spec:
             {{- if $config.volumeMount }}
             - {{- toYaml $config.volumeMount | nindent 14 }}
             {{- end }}
-          {{- end }}
+            {{- end }}
       volumes:
         {{- range $key, $config := .Values.volumeConfig }}
         {{- if and $config.persistence $config.persistence.enabled $config.persistence.volume }}
