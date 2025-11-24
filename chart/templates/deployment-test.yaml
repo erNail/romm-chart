@@ -406,26 +406,65 @@ tests:
               mountPath: "/etc/foo"
               readOnly: true
 
-  - it: "should render volumes with default value"
+  - it: "should render non-persistence volumes with default value"
     asserts:
       - equal:
           path: "spec.template.spec.volumes"
           value:
             - emptyDir: {}
-              name: assets
+              name: "assets"
             - configMap:
-                name: config
-              name: config
+                name: "config"
+              name: "config"
             - emptyDir: {}
-              name: library
+              name: "library"
             - emptyDir: {}
-              name: nginx-conf
+              name: "nginx-conf"
             - emptyDir: {}
-              name: redis-data
+              name: "redis-data"
             - emptyDir: {}
-              name: resources
+              name: "resources"
             - emptyDir: {}
-              name: tmp
+              name: "tmp"
+
+  - it: "should render persistence volumes with default value"
+    set:
+      volumeConfig:
+        resources:
+          persistence:
+            enabled: true
+        library:
+          persistence:
+            enabled: true
+        redisData:
+          persistence:
+            enabled: true
+        assets:
+          persistence:
+            enabled: true
+    asserts:
+      - equal:
+          path: "spec.template.spec.volumes"
+          value:
+            - name: "assets"
+              persistentVolumeClaim:
+                claimName: "assets"
+            - configMap:
+                name: "config"
+              name: "config"
+            - name: "library"
+              persistentVolumeClaim:
+                claimName: "library"
+            - emptyDir: {}
+              name: "nginx-conf"
+            - name: "redis-data"
+              persistentVolumeClaim:
+                claimName: "redis-data"
+            - name: "resources"
+              persistentVolumeClaim:
+                claimName: "resources"
+            - emptyDir: {}
+              name: "tmp"
 
   - it: "should render non-persistence volumes as set"
     set:
