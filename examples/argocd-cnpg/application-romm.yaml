@@ -8,11 +8,11 @@ spec:
   project: "default"
   sources:
     - repoURL: "https://github.com/erNail/romm-chart"
-      targetRevision: "feature/add-chart"
+      targetRevision: "main"
       path: "examples/argocd-cnpg"
       ref: "values"
     - repoURL: "https://github.com/erNail/romm-chart"
-      targetRevision: "feature/add-chart"
+      targetRevision: "main"
       path: "chart"
       helm:
         releaseName: "romm"
