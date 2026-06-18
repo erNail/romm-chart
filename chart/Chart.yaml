@@ -20,4 +20,4 @@ annotations:
       url: https://github.com/erNail/romm-chart/issues
 version: "0.0.0"
 # renovate: image=rommapp/romm
-appVersion: "4.4.1"
+appVersion: "4.9.2"
